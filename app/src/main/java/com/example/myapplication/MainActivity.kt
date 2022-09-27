@@ -14,6 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.*
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,7 +36,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     Column {
-                        MyBox()
+                        /*MyText()*/
                     }
                 }
             }
@@ -40,20 +46,61 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun MyBox() {
-    //Box ~ FrameLayout
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Box(
-            modifier = Modifier
-                .background(Color.Green)
-                .width(100.dp)
-                .height(100.dp)
-                .verticalScroll(
-                    rememberScrollState()
-                )
-        ) {
-            Text(text = "Hello there! I am happy", fontSize = 40.sp)
-        }
+fun MyText() {
+    //Text
+    Column(modifier = Modifier.fillMaxSize()) {
+        Text(
+            text = stringResource(R.string.my_text).repeat(5),
+            //Top to bottom execution
+            Modifier
+                .padding(20.dp)
+                .background(MaterialTheme.colors.error)
+                .width(300.dp),
+            color = MaterialTheme.colors.primaryVariant,
+            fontSize = 40.sp,
+            fontStyle = FontStyle.Italic,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
+}
+
+@Composable
+fun AnnotatedText() {
+    //Text
+    Column(modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+
+    ) {
+        Text(
+
+
+            text = buildAnnotatedString {
+               withStyle(style = ParagraphStyle(textAlign = TextAlign.Center)){
+                   withStyle(style = SpanStyle(
+                       color = Color.Red,
+                       fontSize = 60.sp,
+                       fontStyle = FontStyle.Italic,
+                   )){
+                       append("A")
+                   }
+                   append("n")
+                   append("d")
+                   append("r")
+                   append("o")
+                   append("i")
+                   append("d")
+               }
+            },
+            color = Color.Black,
+            fontSize = 40.sp,
+            fontStyle = FontStyle.Italic,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.width(300.dp)
+
+        )
     }
 }
 
@@ -61,7 +108,8 @@ fun MyBox() {
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
-        MyBox()
+        /*MyText()*/
+        AnnotatedText()
     }
 }
 
