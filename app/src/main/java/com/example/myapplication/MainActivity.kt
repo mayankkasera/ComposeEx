@@ -5,21 +5,21 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     Column {
-                        /*MySelectableText()*/
+                        MyTextField()
                     }
                 }
             }
@@ -48,33 +48,45 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun MySelectableText() {
+fun MyTextField() {
     //Text
     Column(modifier = Modifier.fillMaxSize()) {
 
-        SelectionContainer() {
-            Text(text = stringResource(R.string.my_text))
-            DisableSelection {
-                Text(text = stringResource(R.string.my_text))
-            }
-            Text(text = stringResource(R.string.my_text))
-            Text(text = stringResource(R.string.my_text))
-        }
+        var text by remember { mutableStateOf("Hello") }
 
-        Text(
-            text = stringResource(R.string.my_text).repeat(5),
-            //Top to bottom execution
-            Modifier
-                .padding(20.dp)
-                .background(MaterialTheme.colors.error)
-                .width(300.dp),
-            color = MaterialTheme.colors.primaryVariant,
-            fontSize = 40.sp,
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
+        TextField(
+            value = text,
+            enabled = true,
+            readOnly = false,
+            singleLine = true,
             maxLines = 2,
-            overflow = TextOverflow.Ellipsis
+            label = {
+                Text(text = "hello")
+            },
+            leadingIcon = {
+                IconButton(onClick = {  }) {
+                    Icon(
+                        imageVector = Icons.Filled.Email,
+                        contentDescription = ""
+                    )
+                }
+            },
+            trailingIcon = {
+                IconButton(onClick = {  }) {
+                    Icon(
+                        imageVector = Icons.Filled.Check,
+                        contentDescription = ""
+                    )
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Done
+            ),
+            onValueChange = {
+                text = it
+            },
+
         )
     }
 }
@@ -86,7 +98,7 @@ fun MySelectableText() {
 fun DefaultPreview() {
     MyApplicationTheme {
         /*MyText()*/
-        MySelectableText()
+        MyTextField()
     }
 }
 
