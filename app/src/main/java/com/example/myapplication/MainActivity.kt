@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.DisableSelection
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -36,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     Column {
-                        /*MyText()*/
+                        /*MySelectableText()*/
                     }
                 }
             }
@@ -46,9 +48,19 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun MyText() {
+fun MySelectableText() {
     //Text
     Column(modifier = Modifier.fillMaxSize()) {
+
+        SelectionContainer() {
+            Text(text = stringResource(R.string.my_text))
+            DisableSelection {
+                Text(text = stringResource(R.string.my_text))
+            }
+            Text(text = stringResource(R.string.my_text))
+            Text(text = stringResource(R.string.my_text))
+        }
+
         Text(
             text = stringResource(R.string.my_text).repeat(5),
             //Top to bottom execution
@@ -67,49 +79,14 @@ fun MyText() {
     }
 }
 
-@Composable
-fun AnnotatedText() {
-    //Text
-    Column(modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
 
-    ) {
-        Text(
-
-
-            text = buildAnnotatedString {
-               withStyle(style = ParagraphStyle(textAlign = TextAlign.Center)){
-                   withStyle(style = SpanStyle(
-                       color = Color.Red,
-                       fontSize = 60.sp,
-                       fontStyle = FontStyle.Italic,
-                   )){
-                       append("A")
-                   }
-                   append("n")
-                   append("d")
-                   append("r")
-                   append("o")
-                   append("i")
-                   append("d")
-               }
-            },
-            color = Color.Black,
-            fontSize = 40.sp,
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.width(300.dp)
-
-        )
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
         /*MyText()*/
-        AnnotatedText()
+        MySelectableText()
     }
 }
 
