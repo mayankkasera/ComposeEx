@@ -3,15 +3,20 @@ package com.example.myapplication
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,8 +30,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     Column {
-                        Greeting("Android")
-                        CustomText("Codeinger")
+                        MyBox()
                     }
                 }
             }
@@ -34,89 +38,30 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
 
 @Composable
-fun CustomText(name: String) {
-    Text(text = "Hello $name!")
+fun MyBox() {
+    //Box ~ FrameLayout
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Box(
+            modifier = Modifier
+                .background(Color.Green)
+                .width(100.dp)
+                .height(100.dp)
+                .verticalScroll(
+                    rememberScrollState()
+                )
+        ) {
+            Text(text = "Hello there! I am happy", fontSize = 40.sp)
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
-
-
-
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly
-        ) {
-
-            //Column = orientation vertical
-            //Alignment, Arrangement
-            /*understandAlignmentAndArrangement()*/
-
-            //Weight
-            /*understandWeight()*/
-
-        }
-
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.Top
-        ) {
-            Surface(modifier = Modifier
-                .width(100.dp)
-                .height(50.dp),
-                color = MaterialTheme.colors.primary) {}
-            Surface(modifier = Modifier
-                .width(100.dp)
-                .height(50.dp),
-                color = MaterialTheme.colors.primary) {}
-
-        }
-
-
+        MyBox()
     }
 }
 
-@Composable
-fun understandAlignmentAndArrangement(){
-    Surface(modifier = Modifier
-        .width(200.dp)
-        .height(50.dp),
-        color = MaterialTheme.colors.primary) {}
-
-    Surface(modifier = Modifier
-        .width(200.dp)
-        .height(50.dp),
-        color = MaterialTheme.colors.primary) {}
-
-    Surface(modifier = Modifier
-        .width(200.dp)
-        .height(50.dp),
-        color = MaterialTheme.colors.primary) {}
-    Greeting("Android")
-    CustomText("Codeinger")
-}
-
-@Composable
-fun ColumnScope.understandWeight(){
-
-    Surface(modifier = Modifier
-        .width(200.dp)
-        .weight(3f),
-        color = MaterialTheme.colors.primary) {}
-
-    Surface(modifier = Modifier
-        .width(200.dp)
-        .height(50.dp)
-        .weight(1f),
-        color = MaterialTheme.colors.secondary) {}
-}
